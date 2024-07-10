@@ -2,6 +2,9 @@ import MeetupList from "../components/meetups/MeetupList.jsx";
 import Head from "next/head.js";
 
 export default function index(props) {
+  if (props.meetups.length === 0) {
+    return <h2>Could not fetch meetups</h2>;
+  }
   return (
     <>
       <Head>
@@ -25,13 +28,18 @@ export const getStaticProps = async () => {
     }
     data = await response.json();
     // const meetups = data.meetups;
+    return {
+      props: {
+        meetups: data.meetups,
+      },
+      revalidate: 1,
+    };
   } catch (err) {
     console.log("Error: ", err.message);
+    return {
+      props: {
+        meetups: [],
+      },
+    };
   }
-  return {
-    props: {
-      meetups: data.meetups,
-    },
-    revalidate: 100,
-  };
 };
