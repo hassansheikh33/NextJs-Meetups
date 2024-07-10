@@ -3,7 +3,7 @@ import Head from "next/head.js";
 
 export default function index(props) {
   if (props.meetups.length === 0) {
-    return <h2>Could not fetch meetups</h2>;
+    return <h2 style={{ textAlign: "center" }}>Could not fetch meetups</h2>;
   }
   return (
     <>
@@ -14,19 +14,18 @@ export default function index(props) {
           content="Home of all kinds of meetups of different communities happening in differenet parts of the wolrd"
         />
       </Head>
-      <MeetupList meetups={props.meetups} />;
+      <MeetupList meetups={props.meetups} />
     </>
   );
 }
 
 export const getStaticProps = async () => {
-  let data;
   try {
     const response = await fetch("http://localhost:3000/api/meetups");
     if (!response.ok) {
       throw new Error("Could not fetch meetups");
     }
-    data = await response.json();
+    const data = await response.json();
     // const meetups = data.meetups;
     return {
       props: {
@@ -40,6 +39,7 @@ export const getStaticProps = async () => {
       props: {
         meetups: [],
       },
+      revalidate: 1,
     };
   }
 };
