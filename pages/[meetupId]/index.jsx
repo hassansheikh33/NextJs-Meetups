@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
-import MeetupDetail from "../../components/meetups/meetupDetail/MeetupDetail";
+import MeetupDetail from "../../components/meetups/MeetupDetail/MeetupDetail";
 import Head from "next/head";
 
 export default function MeetupDetailPage(props) {
